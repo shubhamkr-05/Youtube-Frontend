@@ -1,0 +1,17 @@
+@media (max-width: 535px) {
+    .custom-mt-20 {
+      margin-top: 1rem;
+    }
+  }
+
+@media (max-width: 535px) {
+.header-mt-20 {
+    margin-top: 2rem;
+}
+}
+
+@media (max-width: 391px) {
+    .header2-mt-20 {
+        margin-top: 4rem;
+    }
+    }
