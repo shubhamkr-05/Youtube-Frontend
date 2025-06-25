@@ -37,7 +37,7 @@ const Signup = () => {
         "api/v1/users/register",formData,config
       );
 
-      const response2 = await api.post('api/v1/users/login', { email, password, username});
+      const response2 = await api.post('/api/v1/users/login', { email, password, username});
       login(response2.data);
       navigate('/');
       
