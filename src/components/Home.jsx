@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import VideoCard from './VideoCard';
 import Dashboard from './Dashboard';  
 import Header from './Header';        
-import axios from 'axios'; 
 import '../styles/custom.css'
+import api from '../api/axios.js';
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
@@ -14,7 +14,7 @@ const Home = () => {
   const fetchVideos = async (query = '') => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/v1/videos', {
+      const response = await api.get('/api/v1/videos', {
         params: { 
           page: 1,
           limit: 20,

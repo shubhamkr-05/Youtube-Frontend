@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../AuthContext";
 import ShowError from "./Error";
-import axios from "axios";
+import api from '../api/axios.js';
 
 const VideoPlayer = () => {
   const { id } = useParams();
@@ -28,7 +28,7 @@ const VideoPlayer = () => {
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const response = await axios.get(`/api/v1/videos/${id}`);
+        const response = await api.get(`/api/v1/videos/${id}`);
         setVideo(response.data.data.video);
         setLiked(response.data.data.video.isLiked);
         setSubscribed(response.data.data.video.owner[0]?.isSubscribed);
@@ -56,7 +56,7 @@ const VideoPlayer = () => {
         navigate("/login");
       }
 
-      await axios.post(`/api/v1/likes/toggle/v/${id}`);
+      await api.post(`/api/v1/likes/toggle/v/${id}`);
       setLiked((prevLiked) => !prevLiked);
     } catch (error) {
       console.error("Error toggling like:", error);
@@ -71,7 +71,7 @@ const VideoPlayer = () => {
         navigate("/login");
       }
 
-      await axios.post(`/api/v1/subscriptions/c/${video.owner[0]._id}`);
+      await api.post(`/api/v1/subscriptions/c/${video.owner[0]._id}`);
       setSubscribed((prevSubscribed) => !prevSubscribed);
     } catch (error) {
       console.error("Error toggling subscription:", error);
@@ -87,7 +87,7 @@ const VideoPlayer = () => {
         navigate("/login");
       }
 
-      await axios.post(`/api/v1/comments/${id}`, { content: comment });
+      await api.post(`/api/v1/comments/${id}`, { content: comment });
       setComment(""); // Clear the input after successful submission
       fetchComments(); // Fetch comments again after posting
     } catch (error) {
@@ -103,7 +103,7 @@ const VideoPlayer = () => {
 
     setDeleting(true);
     try {
-      await axios.delete(`/api/v1/videos/${id}`);
+      await api.delete(`/api/v1/videos/${id}`);
       navigate("/"); // Redirect to home page after deletion
     } catch (error) {
       console.error("Error deleting video:", error);
@@ -116,7 +116,7 @@ const VideoPlayer = () => {
   const fetchComments = async () => {
     setLoadingComments(true);
     try {
-      const response = await axios.get(`/api/v1/comments/${id}`);
+      const response = await api.get(`/api/v1/comments/${id}`);
       setComments(response.data.data);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -141,7 +141,7 @@ const VideoPlayer = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`/api/v1/comments/c/${commentId}`);
+      await api.delete(`/api/v1/comments/c/${commentId}`);
       fetchComments(); // Refresh comments after deletion
     } catch (error) {
       console.error("Error deleting comment:", error);
@@ -150,7 +150,7 @@ const VideoPlayer = () => {
 
   const handleUpdateComment = async (commentId) => {
     try {
-      await axios.patch(`/api/v1/comments/c/${commentId}`, {
+      await api.patch(`/api/v1/comments/c/${commentId}`, {
         content: editContent,
       });
       setEditingCommentId(null); // Stop editing mode
@@ -162,7 +162,7 @@ const VideoPlayer = () => {
 
   const fetchLikedUsers = async () => {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         `/api/v1/likes/likedByUsers/${video._id}`
       );
       setLikedUsers(response.data.data.users);

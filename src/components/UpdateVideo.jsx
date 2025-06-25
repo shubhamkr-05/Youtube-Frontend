@@ -1,7 +1,7 @@
 // UpdateVideo.js
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios.js';
 
 function UpdateVideo() {
     const { id } = useParams();
@@ -26,7 +26,7 @@ function UpdateVideo() {
         formData.append('description', description);
 
         try {
-            const response = await axios.patch(`/api/v1/videos/${id}`, formData, {
+            const response = await api.patch(`/api/v1/videos/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

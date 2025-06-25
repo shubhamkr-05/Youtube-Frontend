@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../api/axios.js';
 import { useNavigate } from 'react-router-dom';
 
 const ChangePassword = () => {
@@ -17,7 +17,7 @@ const ChangePassword = () => {
     }
 
     try {
-      await axios.post('/api/v1/users/change-password', {
+      await api.post('/api/v1/users/change-password', {
         oldPassword,
         newPassword,
       });

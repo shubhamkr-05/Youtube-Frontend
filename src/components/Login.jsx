@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../api/axios.js';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 
@@ -16,7 +16,7 @@ const Login = () => {
     setError(null);
 
     try {
-      const response = await axios.post('api/v1/users/login', { email, password, username });
+      const response = await api.post('api/v1/users/login', { email, password, username });
       login(response.data);
       
       const redirectUrl = localStorage.getItem("redirectAfterLogin") || "/";

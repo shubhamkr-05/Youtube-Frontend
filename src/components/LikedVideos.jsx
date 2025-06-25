@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from '../api/axios.js';
 import VideoCard from "./VideoCard";
 import Dashboard from "./Dashboard";
 
@@ -11,7 +11,7 @@ const LikedVideo = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get("api/v1/likes/videos");
+        const response = await api.get("api/v1/likes/videos");
         setVideos(response.data.data.Videos);
         setLoading(false);
       } catch (err) {

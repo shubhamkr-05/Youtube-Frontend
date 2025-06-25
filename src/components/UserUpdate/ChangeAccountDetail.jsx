@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../api/axios.js';
 import {useNavigate } from 'react-router-dom';
+
 
 const UpdateAccountForm = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const UpdateAccountForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.patch('api/v1/users/update-account', formData);
+      const response = await api.patch('api/v1/users/update-account', formData);
       setMessage('Account updated successfully!');
       setError('');
       navigate("/");

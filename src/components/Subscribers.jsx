@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "./Dashboard";
-import axios from "axios";
+import api from '../api/axios.js';
 
 const Subscribers = () => {
   const [subscribers, setSubscribers] = useState([]);
@@ -12,7 +12,7 @@ const Subscribers = () => {
   useEffect(() => {
     const fetchSubscribers = async () => {
       try {
-        const response = await axios.get("/api/v1/subscriptions/u");
+        const response = await api.get("/api/v1/subscriptions/u");
         setSubscribers(response.data.data[0].subscribers);
         setLoading(false);
       } catch (err) {

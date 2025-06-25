@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api/axios.js';
 import { useNavigate } from 'react-router-dom';
 
 const UploadVideo = () => {
@@ -36,7 +36,7 @@ const UploadVideo = () => {
     setLoading(true); // Start loading spinner
 
     try {
-      await axios.post('/api/v1/videos/', formData, {
+      await api.post('/api/v1/videos/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

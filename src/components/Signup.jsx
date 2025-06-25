@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
+import api from '../api/axios.js';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 
@@ -33,11 +33,11 @@ const Signup = () => {
     formData.append('coverImage', coverImage);
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         "api/v1/users/register",formData,config
       );
 
-      const response2 = await axios.post('api/v1/users/login', { email, password, username});
+      const response2 = await api.post('api/v1/users/login', { email, password, username});
       login(response2.data);
       navigate('/');
       

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../api/axios.js';
 import { useNavigate } from 'react-router-dom';
 
 const CoverImageForm = () => {
@@ -29,7 +29,7 @@ const CoverImageForm = () => {
 
     try {
       // Make the PATCH request to upload the cover image
-      await axios.patch('api/v1/users/cover-image', formData, {
+      await api.patch('api/v1/users/cover-image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

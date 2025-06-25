@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios.js';
 import VideoCard from './VideoCard'; // Import VideoCard component
 
 const Profile = () => {
@@ -13,7 +13,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`/api/v1/users/profile/${id}`);
+        const response = await api.get(`/api/v1/users/profile/${id}`);
         setProfileData(response.data.data);
       } catch (err) {
         setError('Error fetching profile data');

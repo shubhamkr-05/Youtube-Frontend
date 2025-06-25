@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../api/axios.js';
 import { useNavigate } from 'react-router-dom';
 
 const AvatarForm = () => {
@@ -26,7 +26,7 @@ const AvatarForm = () => {
     setLoading(true); // Start loading
 
     try {
-      const response = await axios.patch('api/v1/users/avatar', formData, {
+      const response = await api.patch('api/v1/users/avatar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
