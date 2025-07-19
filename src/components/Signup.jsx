@@ -22,29 +22,31 @@ const Signup = () => {
     setError(null);
 
     const formData = new FormData();
-    const config = {
-      headers: { 'content-type': 'multipart/form-data' }
-    }
-    formData.append('username', username);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('fullName', fullName);
-    formData.append('avatar', avatar);
-    formData.append('coverImage', coverImage);
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("fullName", fullName);
+    if (avatar) formData.append("avatar", avatar);
+    if (coverImage) formData.append("coverImage", coverImage);
 
     try {
-      const response = await api.post(
-        "api/v1/users/register",formData,config
-      );
+      const response = await api.post("/api/v1/users/register", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      const response2 = await api.post('/api/v1/users/login', { email, password, username});
-      login(response2.data);
-      navigate('/');
-      
-    } catch (error) {
-      setError('Sorry, there was an error while signing you up.'); 
-    }finally {
-      setLoading(false); 
+      const res2 = await api.post("/api/v1/users/login", {
+        email,
+        password,
+        username,
+      });
+
+      login(res2.data);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      setError("Error during registration");
+    } finally {
+      setLoading(false);
     }
   };
 
