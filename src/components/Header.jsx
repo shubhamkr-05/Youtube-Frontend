@@ -68,7 +68,7 @@ const Header = ({ searchQuery, setSearchQuery, handleSearch }) => {
                 onClick={toggleDropdown}
               >
                 <img
-                  src={user.data.user.avatar || 'https://via.placeholder.com/40'}
+                  src={user.avatar || 'https://via.placeholder.com/40'}
                   className="w-10 h-10 rounded-full"
                   alt="User Avatar"
                 />
@@ -92,7 +92,7 @@ const Header = ({ searchQuery, setSearchQuery, handleSearch }) => {
                   <ul>
                     <li
                       className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                      onClick={() => handleOptionClick(`/profile/${user.data.user._id}`)}
+                      onClick={() => handleOptionClick(`/profile/${user._id}`)}
                     >
                       View Profile
                     </li>

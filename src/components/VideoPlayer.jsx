@@ -71,7 +71,7 @@ const VideoPlayer = () => {
         navigate("/login");
       }
 
-      await api.post(`/api/v1/subscriptions/${video.owner[0]._id}`);
+      await api.post(`/api/v1/subscriptions/c/${video.owner[0]._id}`);
       setSubscribed((prevSubscribed) => !prevSubscribed);
     } catch (error) {
       console.error("Error toggling subscription:", error);
@@ -280,7 +280,7 @@ const VideoPlayer = () => {
       </button>
 
       {/* Subscribe Button */}
-      {(!user || video.owner[0]._id !== user.data.user._id) && (<button
+      {(!user || video.owner[0]._id !== user._id) && (<button
         onClick={toggleSubscribe}
         className={`ml-4 px-4 py-2 rounded ${
           user
@@ -311,14 +311,14 @@ const VideoPlayer = () => {
               {comments.map((comment, index) => (
                 <li key={index} className="mb-4 flex items-start">
                   <img
-                    onClick={() => navigate(`/profile/${comment.owner[0]._id}`)}
-                    src={comment.owner[0].avatar}
-                    alt={comment.owner[0].username}
+                    onClick={() => navigate(`/profile/${comment?.owner?._id}`)}
+                    src={comment?.owner?.avatar}
+                    alt={comment?.owner?.username}
                     className="w-10 h-10 rounded-full mr-3 cursor-pointer"
                   />
 
                   <div>
-                    <p className="font-bold">{comment.owner[0].username}</p>
+                    <p className="font-bold">{comment?.owner?.username}</p>
                     {editingCommentId === comment._id ? (
                       <>
                         <textarea
@@ -348,14 +348,13 @@ const VideoPlayer = () => {
                           {new Date(comment.createdAt).toLocaleString()}
                         </p>
 
-                        {/* Show delete and update buttons only for the user's own comments */}
-                        {comment.owner[0]._id === user?.data.user._id && (
+                        {comment?.owner?._id === user?._id && (
                           <div className="flex justify-end">
                             <button
-                              onClick={() =>
-                                setEditingCommentId(comment._id) ||
-                                setEditContent(comment.content)
-                              }
+                              onClick={() => {
+                                setEditingCommentId(comment._id);
+                                setEditContent(comment.content);
+                              }}
                               className="text-blue-500 mr-2"
                             >
                               Update
@@ -380,6 +379,7 @@ const VideoPlayer = () => {
         </div>
       )}
 
+
       {/* Comment Form */}
       <form
         onSubmit={handleCommentSubmit}
@@ -387,9 +387,9 @@ const VideoPlayer = () => {
       >
         <div className="flex items-start mb-4">
           <img
-            onClick={() => navigate(`/profile/${user?.data.user._id}`)}
-            src={user?.data.user.avatar}
-            alt={user?.data.user.username}
+            onClick={() => navigate(`/profile/${user?._id}`)}
+            src={user?.avatar}
+            alt={user?.username}
             className="w-10 h-10 rounded-full mr-4 cursor-pointer"
           />
           <textarea
@@ -411,7 +411,7 @@ const VideoPlayer = () => {
       </form>
 
       {/* Delete Option */}
-      {user && video?.owner && video.owner[0]._id === user.data.user._id && (
+      {user && video?.owner && video.owner[0]._id === user._id && (
         <div className="mt-4">
           <button
             onClick={handleDelete}
@@ -428,7 +428,7 @@ const VideoPlayer = () => {
       )}
 
       {/* Update Option */}
-      {user && video?.owner && video.owner[0]._id === user.data.user._id && (
+      {user && video?.owner && video.owner[0]._id === user._id && (
         <div className="mt-4">
           <button
             onClick={() => navigate(`/update-video/${id}`)}

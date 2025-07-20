@@ -17,13 +17,18 @@ const Login = () => {
 
     try {
       const response = await api.post('api/v1/users/login', { email, password, username });
-      login(response.data);
-      
+
+      const user = response.data?.data?.user;
+      if (!user) throw new Error("Invalid user data received");
+
+      login(user); // ✅ Correctly set user in context and localStorage
+
       const redirectUrl = localStorage.getItem("redirectAfterLogin") || "/";
       localStorage.removeItem("redirectAfterLogin");
       navigate(redirectUrl);
     } catch (error) {
-      setError('Sorry, there was an error while signing you up.');
+      console.error(error);
+      setError('Sorry, there was an error while logging you in.');
     }
   };
 
@@ -33,9 +38,7 @@ const Login = () => {
         <h2 className="text-2xl font-bold mb-6">Login</h2>
 
         {error && (
-          <div className="mb-4 text-red-500 text-center">
-            {error}
-          </div>
+          <div className="mb-4 text-red-500 text-center">{error}</div>
         )}
 
         <form onSubmit={handleSubmit}>
@@ -43,7 +46,10 @@ const Login = () => {
             <label className="block text-gray-700 mb-2">Email or Username</label>
             <input
               type="text"
-              onChange={(e) => { setEmail(e.target.value); setUsername(e.target.value); }}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setUsername(e.target.value);
+              }}
               className="w-full px-3 py-2 border border-gray-300 rounded"
               required
             />
