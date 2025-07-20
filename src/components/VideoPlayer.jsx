@@ -71,7 +71,7 @@ const VideoPlayer = () => {
         navigate("/login");
       }
 
-      await api.post(`/api/v1/subscriptions/c/${video.owner[0]._id}`);
+      await api.post(`/api/v1/subscriptions/${video.owner[0]._id}`);
       setSubscribed((prevSubscribed) => !prevSubscribed);
     } catch (error) {
       console.error("Error toggling subscription:", error);
